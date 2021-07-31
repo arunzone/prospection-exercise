@@ -1,57 +1,43 @@
 package com.prospection.coding.assignment.processor
 
+import com.prospection.coding.assignment.validator.AlphabetValidator
 import com.prospection.coding.assignment.validator.VerbValidator
 import io.kotest.core.spec.IsolationMode
-import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.core.test.TestCase
-import io.kotest.core.test.TestResult
+import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.MockKAnnotations
-import io.mockk.clearAllMocks
-import io.mockk.every
-import io.mockk.impl.annotations.MockK
 
-internal class SentenceProcessorTest : BehaviorSpec() {
-    @MockK
-    lateinit var verbValidator: VerbValidator
-    lateinit var sentenceProcessor: SentenceProcessor
+internal class SentenceProcessorTest : ShouldSpec() {
     override fun isolationMode() = IsolationMode.InstancePerTest
-    override fun beforeTest(testCase: TestCase) {
-        super.beforeTest(testCase)
-        MockKAnnotations.init(this)
-        sentenceProcessor = SentenceProcessor(verbValidator)
-    }
+    private var sentenceProcessor = SentenceProcessor(VerbValidator(), AlphabetValidator())
 
     init {
-        given("a valid sentence has one verb") {
-            `when`("verb validator is invoked ") {
-                every { verbValidator.isVerb("Cufabiu") } returns false
-                every { verbValidator.isVerb("nonad.") } returns true
-                val processResult =
-                    sentenceProcessor.process("Cufabiu nonad.")
-                then("it should return count 1") {
-                    processResult.verbs shouldBe 1
-                }
-            }
+        should("return verb count 1 for a sentence with one verb") {
+            val processResult =
+                sentenceProcessor.process("Cufabiu nonad")
+
+            processResult.verbsCount shouldBe 1
         }
 
-        given("a valid sentence has 2 verb") {
-            `when`("verb validator is invoked ") {
-                every { verbValidator.isVerb("Cufabiu") } returns false
-                every { verbValidator.isVerb("in") } returns false
-                every { verbValidator.isVerb("nonad") } returns true
-                every { verbValidator.isVerb("finl.") } returns true
-                val processResult =
-                    sentenceProcessor.process("Cufabiu nonad in finl.")
-                then("it should return count 2") {
-                    processResult.verbs shouldBe 2
-                }
+        should("return verb count 2 for a sentence with 2 verb") {
+            val processResult = sentenceProcessor.process("Cufabiu nonad in finl")
+
+            processResult.verbsCount shouldBe 2
+        }
+
+        should("return invalid characters count 1 for a sentence with one invalid character") {
+            val processResult = sentenceProcessor.process("Cufabiuz nonad")
+            processResult.invalidCharactersCount shouldBe 1
+        }
+
+        context("a word in sentence has one invalid character in verb") {
+            val processResult =
+                sentenceProcessor.process("Cufabiu nvnad")
+            should("it should return invalid characters count 1") {
+                processResult.invalidCharactersCount shouldBe 1
+            }
+            should("it should return verbs count 0") {
+                processResult.verbsCount shouldBe 0
             }
         }
-    }
-
-
-    override fun afterTest(testCase: TestCase, result: TestResult) {
-        clearAllMocks()
     }
 }

@@ -1,7 +1,10 @@
 package com.prospection.coding.assignment.validator
 
+import org.springframework.stereotype.Component
+
+@Component
 class AlphabetValidator {
-    fun validate(word: String): Boolean {
+    fun isValid(word: String): Boolean {
         val regex = Regex("^[abcdefghijlmnopqurs.!]+$", RegexOption.IGNORE_CASE)
         return word matches regex
     }
