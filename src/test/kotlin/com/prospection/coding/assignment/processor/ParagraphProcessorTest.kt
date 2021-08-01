@@ -39,86 +39,33 @@ internal class ParagraphProcessorTest : ShouldSpec() {
                 wordsCount = 0,
                 sentencesCount = 0
             )
-            context("verb") {
-                val firstResult = GrammarResult(
-                    verbsCount = 1,
-                    nounsCount = 0,
-                    prepositionsCount = 0,
-                    violations = emptyViolationsResult
-                )
-                val secondResult = GrammarResult(
-                    verbsCount = 2,
-                    nounsCount = 0,
-                    prepositionsCount = 0,
-                    violations = emptyViolationsResult
-                )
-                every { sentenceProcessor process "Cufabiu maffas nonad in auguec finibu soliciu" } answers { firstResult }
-                every { sentenceProcessor process "Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac" } answers { secondResult }
-                should("return sum of verbs") {
-                    val result =
-                        paragraphProcessor process "Cufabiu maffas nonad in auguec finibu soliciu. Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. "
-                    result shouldBe GrammarResult(
-                        verbsCount = 3,
-                        nounsCount = 0,
-                        prepositionsCount = 0,
-                        violations = emptyViolationsResult
-                    )
-                }
+            val firstResult = GrammarResult(
+                verbsCount = 1,
+                nounsCount = 2,
+                prepositionsCount = 3,
+                violations = emptyViolationsResult
+            )
+            val secondResult = GrammarResult(
+                verbsCount = 2,
+                nounsCount = 3,
+                prepositionsCount = 4,
+                violations = emptyViolationsResult
+            )
+            every { sentenceProcessor process "Cufabiu maffas nonad in auguec finibu soliciu" } answers { firstResult }
+            every { sentenceProcessor process "Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac" } answers { secondResult }
+            val result =
+                paragraphProcessor process "Cufabiu maffas nonad in auguec finibu soliciu. Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. "
+
+            should("return sum of verbs") {
+                result.verbsCount shouldBe 3
+            }
+            should("return sum of nouns") {
+                result.nounsCount shouldBe 5
+            }
+            should("return sum of prepositions") {
+                result.prepositionsCount shouldBe 7
             }
 
-            context("noun") {
-                val firstResult = GrammarResult(
-                    verbsCount = 0,
-                    nounsCount = 2,
-                    prepositionsCount = 0,
-                    violations = emptyViolationsResult
-                )
-                val secondResult = GrammarResult(
-                    verbsCount = 0,
-                    nounsCount = 3,
-                    prepositionsCount = 0,
-                    violations = emptyViolationsResult
-                )
-                every { sentenceProcessor process "Cufabiu maffas nonad in auguec finibu soliciu" } answers { firstResult }
-                every { sentenceProcessor process "Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac" } answers { secondResult }
-                should("return sum of nouns") {
-                    val result =
-                        paragraphProcessor process "Cufabiu maffas nonad in auguec finibu soliciu. Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. "
-                    result shouldBe GrammarResult(
-                        verbsCount = 0,
-                        nounsCount = 5,
-                        prepositionsCount = 0,
-                        violations = emptyViolationsResult
-                    )
-                }
-            }
-
-            context("preposition") {
-                val firstResult = GrammarResult(
-                    verbsCount = 0,
-                    nounsCount = 0,
-                    prepositionsCount = 3,
-                    violations = emptyViolationsResult
-                )
-                val secondResult = GrammarResult(
-                    verbsCount = 0,
-                    nounsCount = 0,
-                    prepositionsCount = 4,
-                    violations = emptyViolationsResult
-                )
-                every { sentenceProcessor process "Cufabiu maffas nonad in auguec finibu soliciu" } answers { firstResult }
-                every { sentenceProcessor process "Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac" } answers { secondResult }
-                should("return sum of prepositions") {
-                    val result =
-                        paragraphProcessor process "Cufabiu maffas nonad in auguec finibu soliciu. Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. "
-                    result shouldBe GrammarResult(
-                        verbsCount = 0,
-                        nounsCount = 0,
-                        prepositionsCount = 7,
-                        violations = emptyViolationsResult
-                    )
-                }
-            }
             context("violation") {
                 val firstViolationsResult = ViolationsResult(
                     charactersCount = 1,
