@@ -23,6 +23,7 @@ class ParagraphProcessor(@Autowired private val sentenceProcessor: SentenceProce
             charactersCount = sentenceViolation.charactersCount,
             wordsCount = sentenceViolation.wordsCount,
             sentencesCount = sentenceViolation.sentencesCount,
+            verbsCount = sentenceViolation.verbsCount,
             paragraphSentencesCount = paragraphSentencesViolationCount,
             paragraphSuffixesCount = 0
         )
@@ -45,6 +46,7 @@ class ParagraphProcessor(@Autowired private val sentenceProcessor: SentenceProce
             charactersCount = calculatedSentenceGrammarResult.violation.charactersCount + sentenceGrammarResult.violation.charactersCount,
             wordsCount = calculatedSentenceGrammarResult.violation.wordsCount + sentenceGrammarResult.violation.wordsCount,
             sentencesCount = calculatedSentenceGrammarResult.violation.sentencesCount + sentenceGrammarResult.violation.sentencesCount,
+            verbsCount = calculatedSentenceGrammarResult.violation.verbsCount + sentenceGrammarResult.violation.verbsCount,
         )
     )
 

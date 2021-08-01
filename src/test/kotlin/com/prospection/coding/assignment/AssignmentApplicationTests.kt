@@ -42,6 +42,7 @@ class AssignmentApplicationTests(@Autowired val restTemplate: TestRestTemplate) 
             violation = ViolationsResult(
                 charactersCount = 0,
                 wordsCount = 0,
+                verbsCount = 0,
                 sentencesCount = 0,
                 paragraphSuffixesCount = 0,
                 paragraphSentencesCount = 0

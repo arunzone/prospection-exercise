@@ -10,7 +10,14 @@ class VerbValidator {
         return  verbLength and hasVerbTense
     }
 
+    fun isNotVerb(word: String): Boolean {
+        val verbLength = word.length in 4..5
+        val notVerbTense by lazy { word.matches(nonVerbSuffix) }
+        return  verbLength and notVerbTense
+    }
+
     companion object {
         private val verbSuffix = ".*[drl]".toRegex()
+        private val nonVerbSuffix = ".*[^drl]".toRegex()
     }
 }

@@ -37,6 +37,7 @@ class LanguageService(@Autowired private val paragraphProcessor: ParagraphProces
             violation = ViolationsResult(
                 charactersCount = 0,
                 wordsCount = 0,
+                verbsCount = 0,
                 sentencesCount = 0,
                 paragraphSentencesCount = 0,
                 paragraphSuffixesCount = 1
@@ -58,6 +59,7 @@ class LanguageService(@Autowired private val paragraphProcessor: ParagraphProces
         return ViolationsResult(
             charactersCount = paragraphViolation.charactersCount,
             wordsCount = paragraphViolation.wordsCount,
+            verbsCount = paragraphViolation.verbsCount,
             sentencesCount = paragraphViolation.sentencesCount,
             paragraphSentencesCount = paragraphViolation.paragraphSentencesCount,
             paragraphSuffixesCount = invalidParagraphSuffixesCount
@@ -77,6 +79,7 @@ class LanguageService(@Autowired private val paragraphProcessor: ParagraphProces
         violation = ViolationsResult(
             charactersCount = calculatedGrammarResult.violation.charactersCount + grammarResult.violation.charactersCount,
             wordsCount = calculatedGrammarResult.violation.wordsCount + grammarResult.violation.wordsCount,
+            verbsCount = calculatedGrammarResult.violation.verbsCount + grammarResult.violation.verbsCount,
             sentencesCount = calculatedGrammarResult.violation.sentencesCount + grammarResult.violation.sentencesCount,
             paragraphSentencesCount = calculatedGrammarResult.violation.paragraphSentencesCount + grammarResult.violation.paragraphSentencesCount,
             paragraphSuffixesCount = calculatedGrammarResult.violation.paragraphSuffixesCount,

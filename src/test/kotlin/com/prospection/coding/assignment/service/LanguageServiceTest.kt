@@ -41,6 +41,7 @@ internal class LanguageServiceTest : ShouldSpec() {
                     violation = ViolationsResult(
                         charactersCount = 0,
                         wordsCount = 0,
+                        verbsCount = 0,
                         sentencesCount = 0,
                         paragraphSentencesCount = 0,
                         paragraphSuffixesCount = 1
@@ -57,6 +58,7 @@ internal class LanguageServiceTest : ShouldSpec() {
             val violationsResult = ViolationsResult(
                 charactersCount = 4,
                 wordsCount = 5,
+                verbsCount = 7,
                 sentencesCount = 6,
                 paragraphSuffixesCount = 0,
                 paragraphSentencesCount = 1
@@ -86,6 +88,9 @@ internal class LanguageServiceTest : ShouldSpec() {
             should("have words violation count") {
                 result.violation.wordsCount shouldBe 5
             }
+            should("have verbs violation count") {
+                result.violation.wordsCount shouldBe 7
+            }
             should("have sentence violation count") {
                 result.violation.sentencesCount shouldBe 6
             }
@@ -106,6 +111,7 @@ internal class LanguageServiceTest : ShouldSpec() {
             val violationsResult = ViolationsResult(
                 charactersCount = 4,
                 wordsCount = 5,
+                verbsCount = 7,
                 sentencesCount = 6,
                 paragraphSuffixesCount = 0,
                 paragraphSentencesCount = 1
@@ -134,6 +140,9 @@ internal class LanguageServiceTest : ShouldSpec() {
             }
             should("have words violation count") {
                 result.violation.wordsCount shouldBe 10
+            }
+            should("have verbs violation count") {
+                result.violation.verbsCount shouldBe 14
             }
             should("have sentence violation count") {
                 result.violation.sentencesCount shouldBe 12
@@ -167,6 +176,7 @@ internal class LanguageServiceTest : ShouldSpec() {
             val violationsResult = ViolationsResult(
                 charactersCount = 4,
                 wordsCount = 5,
+                verbsCount = 7,
                 sentencesCount = 6,
                 paragraphSuffixesCount = 0,
                 paragraphSentencesCount = 1

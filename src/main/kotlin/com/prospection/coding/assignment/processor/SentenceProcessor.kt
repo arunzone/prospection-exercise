@@ -59,10 +59,12 @@ class SentenceProcessor(
         val invalidWordsCount = words.size - validWords.size
         val invalidCharactersCount = validWords.size - validAlphabets.size
         val inCompleteSentence = sentenceMetrics.any { it == 0 }
+        val invalidVerbsCount = validAlphabets.count { verbValidator.isNotVerb(it) }
         return SentenceViolationsResult(
             charactersCount = invalidCharactersCount,
             wordsCount = invalidWordsCount,
-            sentencesCount = if (inCompleteSentence) 1 else 0
+            sentencesCount = if (inCompleteSentence) 1 else 0,
+            verbsCount = invalidVerbsCount
         )
     }
 

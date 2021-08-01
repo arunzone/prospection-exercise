@@ -28,7 +28,8 @@ internal class ParagraphProcessorTest : ShouldSpec() {
             val sentenceViolationsResult = SentenceViolationsResult(
                 charactersCount = 1,
                 wordsCount = 2,
-                sentencesCount = 3
+                sentencesCount = 3,
+                verbsCount = 4
             )
             val sentenceGrammarResult = SentenceGrammarResult(
                 verbsCount = 1,
@@ -47,9 +48,10 @@ internal class ParagraphProcessorTest : ShouldSpec() {
                     violation = ViolationsResult(
                         charactersCount = 1,
                         wordsCount = 2,
+                        verbsCount = 4,
                         sentencesCount = 3,
                         paragraphSuffixesCount = 0,
-                        paragraphSentencesCount = 0
+                        paragraphSentencesCount = 0,
                     )
                 )
             }
@@ -60,12 +62,14 @@ internal class ParagraphProcessorTest : ShouldSpec() {
                 val firstSentenceViolationsResult = SentenceViolationsResult(
                     charactersCount = 1,
                     wordsCount = 2,
-                    sentencesCount = 3
+                    sentencesCount = 3,
+                    verbsCount = 4
                 )
                 val secondSentenceViolationsResult = SentenceViolationsResult(
                     charactersCount = 4,
                     wordsCount = 5,
-                    sentencesCount = 6
+                    sentencesCount = 6,
+                    verbsCount = 7
                 )
                 val firstResult = SentenceGrammarResult(
                     verbsCount = 1,
@@ -98,6 +102,7 @@ internal class ParagraphProcessorTest : ShouldSpec() {
                         charactersCount = 5,
                         wordsCount = 7,
                         sentencesCount = 9,
+                        verbsCount = 11,
                         paragraphSuffixesCount = 0,
                         paragraphSentencesCount = 0
                     )
@@ -107,7 +112,8 @@ internal class ParagraphProcessorTest : ShouldSpec() {
                 val sentenceViolationsResult = SentenceViolationsResult(
                     charactersCount = 1,
                     wordsCount = 2,
-                    sentencesCount = 3
+                    sentencesCount = 3,
+                    verbsCount = 4
                 )
                 val sentenceGrammarResult = SentenceGrammarResult(
                     verbsCount = 1,
