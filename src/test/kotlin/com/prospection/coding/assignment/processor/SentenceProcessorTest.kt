@@ -33,14 +33,14 @@ internal class SentenceProcessorTest : ShouldSpec() {
 
         should("return invalid characters count 1 for a sentence with one invalid character") {
             val processResult = sentenceProcessor.process("Cufabiuz nonad")
-            processResult.violations.charactersCount shouldBe 1
+            processResult.violation.charactersCount shouldBe 1
         }
 
         context("a word in sentence has one invalid character in verb") {
             val processResult =
                 sentenceProcessor.process("Cufabiu nvnad")
             should("return invalid characters count 1") {
-                processResult.violations.charactersCount shouldBe 1
+                processResult.violation.charactersCount shouldBe 1
             }
             should("return verbs count 0") {
                 processResult.verbsCount shouldBe 0
@@ -51,10 +51,10 @@ internal class SentenceProcessorTest : ShouldSpec() {
             val processResult =
                 sentenceProcessor.process("Cufabiu is nanad")
             should("not have any invalid characters") {
-                processResult.violations.charactersCount shouldBe 0
+                processResult.violation.charactersCount shouldBe 0
             }
             should("not have any invalid words") {
-                processResult.violations.wordsCount shouldBe 0
+                processResult.violation.wordsCount shouldBe 0
             }
             should("have a verb") {
                 processResult.verbsCount shouldBe 1
@@ -71,10 +71,10 @@ internal class SentenceProcessorTest : ShouldSpec() {
             val processResult =
                 sentenceProcessor.process("Nunddz cufabiu is augueculrices nanad")
             should("not have any invalid characters") {
-                processResult.violations.wordsCount shouldBe 1
+                processResult.violation.wordsCount shouldBe 1
             }
             should("not have any invalid words") {
-                processResult.violations.charactersCount shouldBe 1
+                processResult.violation.charactersCount shouldBe 1
             }
             should("have a verb") {
                 processResult.verbsCount shouldBe 1
@@ -86,22 +86,22 @@ internal class SentenceProcessorTest : ShouldSpec() {
                 processResult.prepositionsCount shouldBe 1
             }
             should("not have any violation") {
-                processResult.violations.sentencesCount shouldBe 0
+                processResult.violation.sentencesCount shouldBe 0
             }
         }
 
         context("violation in a sentence") {
             should("have violation for no preposition") {
                 val processResult = sentenceProcessor.process("Aenean aucbor purusa")
-                processResult.violations.sentencesCount shouldBe 1
+                processResult.violation.sentencesCount shouldBe 1
             }
             should("have violation for no verb") {
                 val processResult = sentenceProcessor.process("Aenean auc purusa")
-                processResult.violations.sentencesCount shouldBe 1
+                processResult.violation.sentencesCount shouldBe 1
             }
             should("have violation for no Noun") {
                 val processResult = sentenceProcessor.process("Aucbor pur")
-                processResult.violations.sentencesCount shouldBe 1
+                processResult.violation.sentencesCount shouldBe 1
             }
         }
     }

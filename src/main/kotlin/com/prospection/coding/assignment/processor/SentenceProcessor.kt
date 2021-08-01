@@ -1,7 +1,7 @@
 package com.prospection.coding.assignment.processor
 
-import com.prospection.coding.assignment.dto.GrammarResult
-import com.prospection.coding.assignment.dto.ViolationsResult
+import com.prospection.coding.assignment.dto.sentence.SentenceGrammarResult
+import com.prospection.coding.assignment.dto.sentence.SentenceViolationsResult
 import com.prospection.coding.assignment.validator.AlphabetValidator
 import com.prospection.coding.assignment.validator.GrammarValidator
 import com.prospection.coding.assignment.validator.VerbValidator
@@ -18,10 +18,10 @@ class SentenceProcessor(
 ) {
 
     companion object {
-        private val wordSeparator = "(\\s)+".toRegex()
+        private val wordSeparator = "( )+".toRegex()
     }
 
-    infix fun process(sentence: String): GrammarResult {
+    infix fun process(sentence: String): SentenceGrammarResult {
         val (words, validWords, validAlphabets) = processWordsFrom(sentence)
 
         val verbsCount = validAlphabets.count { verbValidator.isVerb(it) }
@@ -35,8 +35,8 @@ class SentenceProcessor(
             listOf(verbsCount, nounsCount, prepositionsCount)
         )
 
-        return GrammarResult(
-            violations = violations,
+        return SentenceGrammarResult(
+            violation = violations,
             verbsCount = verbsCount,
             nounsCount = nounsCount,
             prepositionsCount = prepositionsCount
@@ -55,11 +55,11 @@ class SentenceProcessor(
         validWords: List<String>,
         validAlphabets: List<String>,
         sentenceMetrics: List<Int>
-    ): ViolationsResult {
+    ): SentenceViolationsResult {
         val invalidWordsCount = words.size - validWords.size
         val invalidCharactersCount = validWords.size - validAlphabets.size
         val inCompleteSentence = sentenceMetrics.any { it == 0 }
-        return ViolationsResult(
+        return SentenceViolationsResult(
             charactersCount = invalidCharactersCount,
             wordsCount = invalidWordsCount,
             sentencesCount = if (inCompleteSentence) 1 else 0

@@ -1,7 +1,7 @@
-package com.prospection.coding.assignment.dto
+package com.prospection.coding.assignment.dto.paragraph
 
 data class GrammarResult(
-    val violations: ViolationsResult,
+    val violation: ViolationsResult,
     val verbsCount: Int,
     val nounsCount: Int,
     val prepositionsCount: Int,
