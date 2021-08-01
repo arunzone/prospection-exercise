@@ -34,12 +34,12 @@ internal class ParagraphProcessorTest : ShouldSpec() {
         }
 
         context("paragraph has multiple sentence") {
+            val emptyViolationsResult = ViolationsResult(
+                charactersCount = 0,
+                wordsCount = 0,
+                sentencesCount = 0
+            )
             context("verb") {
-                val emptyViolationsResult = ViolationsResult(
-                    charactersCount = 0,
-                    wordsCount = 0,
-                    sentencesCount = 0
-                )
                 val firstResult = GrammarResult(
                     verbsCount = 1,
                     nounsCount = 0,
@@ -67,11 +67,6 @@ internal class ParagraphProcessorTest : ShouldSpec() {
             }
 
             context("noun") {
-                val emptyViolationsResult = ViolationsResult(
-                    charactersCount = 0,
-                    wordsCount = 0,
-                    sentencesCount = 0
-                )
                 val firstResult = GrammarResult(
                     verbsCount = 0,
                     nounsCount = 2,
@@ -93,6 +88,33 @@ internal class ParagraphProcessorTest : ShouldSpec() {
                         verbsCount = 0,
                         nounsCount = 5,
                         prepositionsCount = 0,
+                        violations = emptyViolationsResult
+                    )
+                }
+            }
+
+            context("preposition") {
+                val firstResult = GrammarResult(
+                    verbsCount = 0,
+                    nounsCount = 0,
+                    prepositionsCount = 3,
+                    violations = emptyViolationsResult
+                )
+                val secondResult = GrammarResult(
+                    verbsCount = 0,
+                    nounsCount = 0,
+                    prepositionsCount = 4,
+                    violations = emptyViolationsResult
+                )
+                every { sentenceProcessor process "Cufabiu maffas nonad in auguec finibu soliciu" } answers { firstResult }
+                every { sentenceProcessor process "Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac" } answers { secondResult }
+                should("return sum of prepositions") {
+                    val result =
+                        paragraphProcessor process "Cufabiu maffas nonad in auguec finibu soliciu. Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. "
+                    result shouldBe GrammarResult(
+                        verbsCount = 0,
+                        nounsCount = 0,
+                        prepositionsCount = 7,
                         violations = emptyViolationsResult
                     )
                 }

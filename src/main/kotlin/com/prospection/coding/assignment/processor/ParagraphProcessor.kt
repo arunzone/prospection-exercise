@@ -13,7 +13,7 @@ class ParagraphProcessor(@Autowired private val sentenceProcessor: SentenceProce
             .reduce { grammerResult, calculatedGrammarResult -> GrammarResult(
                     verbsCount = calculatedGrammarResult.verbsCount + grammerResult.verbsCount,
                     nounsCount = calculatedGrammarResult.nounsCount + grammerResult.nounsCount,
-                    prepositionsCount = 0,
+                    prepositionsCount = calculatedGrammarResult.prepositionsCount + grammerResult.prepositionsCount,
                     violations = grammerResult.violations
                 )
             }
