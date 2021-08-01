@@ -21,7 +21,7 @@ class SentenceProcessor(
         private val wordSeparator = "(\\s)+".toRegex()
     }
 
-    fun process(sentence: String): GrammarResult {
+    infix fun process(sentence: String): GrammarResult {
         val (words, validWords, validAlphabets) = processWordsFrom(sentence)
 
         val verbsCount = validAlphabets.count { verbValidator.isVerb(it) }
