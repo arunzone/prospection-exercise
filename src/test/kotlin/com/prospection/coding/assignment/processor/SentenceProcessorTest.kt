@@ -1,14 +1,21 @@
 package com.prospection.coding.assignment.processor
 
 import com.prospection.coding.assignment.validator.AlphabetValidator
+import com.prospection.coding.assignment.validator.GrammarValidator
 import com.prospection.coding.assignment.validator.VerbValidator
+import com.prospection.coding.assignment.validator.WordValidator
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.ShouldSpec
 import io.kotest.matchers.shouldBe
 
 internal class SentenceProcessorTest : ShouldSpec() {
     override fun isolationMode() = IsolationMode.InstancePerTest
-    private var sentenceProcessor = SentenceProcessor(VerbValidator(), AlphabetValidator())
+    private var sentenceProcessor = SentenceProcessor(
+        verbValidator = VerbValidator(),
+        alphabetValidator = AlphabetValidator(),
+        grammarValidator = GrammarValidator(),
+        wordValidator = WordValidator()
+    )
 
     init {
         should("return verb count 1 for a sentence with one verb") {
@@ -26,17 +33,75 @@ internal class SentenceProcessorTest : ShouldSpec() {
 
         should("return invalid characters count 1 for a sentence with one invalid character") {
             val processResult = sentenceProcessor.process("Cufabiuz nonad")
-            processResult.invalidCharactersCount shouldBe 1
+            processResult.violations.charactersCount shouldBe 1
         }
 
         context("a word in sentence has one invalid character in verb") {
             val processResult =
                 sentenceProcessor.process("Cufabiu nvnad")
-            should("it should return invalid characters count 1") {
-                processResult.invalidCharactersCount shouldBe 1
+            should("return invalid characters count 1") {
+                processResult.violations.charactersCount shouldBe 1
             }
-            should("it should return verbs count 0") {
+            should("return verbs count 0") {
                 processResult.verbsCount shouldBe 0
+            }
+        }
+
+        context("a sentence has one noun, preposition and verb") {
+            val processResult =
+                sentenceProcessor.process("Cufabiu is nanad")
+            should("not have any invalid characters") {
+                processResult.violations.charactersCount shouldBe 0
+            }
+            should("not have any invalid words") {
+                processResult.violations.wordsCount shouldBe 0
+            }
+            should("have a verb") {
+                processResult.verbsCount shouldBe 1
+            }
+            should("have a noun") {
+                processResult.nounsCount shouldBe 1
+            }
+            should("have a preosition") {
+                processResult.prepositionsCount shouldBe 1
+            }
+        }
+
+        context("a sentence has one noun, preposition, verb, invalid character and invalid word") {
+            val processResult =
+                sentenceProcessor.process("Nunddz cufabiu is augueculrices nanad")
+            should("not have any invalid characters") {
+                processResult.violations.wordsCount shouldBe 1
+            }
+            should("not have any invalid words") {
+                processResult.violations.charactersCount shouldBe 1
+            }
+            should("have a verb") {
+                processResult.verbsCount shouldBe 1
+            }
+            should("have a noun") {
+                processResult.nounsCount shouldBe 1
+            }
+            should("have a preposition") {
+                processResult.prepositionsCount shouldBe 1
+            }
+            should("not have any violation") {
+                processResult.violations.sentencesCount shouldBe 0
+            }
+        }
+
+        context("violation in a sentence") {
+            should("have violation for no preposition") {
+                val processResult = sentenceProcessor.process("Aenean aucbor purusa")
+                processResult.violations.sentencesCount shouldBe 1
+            }
+            should("have violation for no verb") {
+                val processResult = sentenceProcessor.process("Aenean auc purusa")
+                processResult.violations.sentencesCount shouldBe 1
+            }
+            should("have violation for no Noun") {
+                val processResult = sentenceProcessor.process("Aucbor pur")
+                processResult.violations.sentencesCount shouldBe 1
             }
         }
     }

@@ -6,10 +6,11 @@ import org.springframework.stereotype.Component
 class VerbValidator {
     fun isVerb(word: String): Boolean {
         val verbLength = word.length in 4..5
-        val hasVerbTense = word.matches(verbSuffix)
-        return hasVerbTense and verbLength
+        val hasVerbTense by lazy { word.matches(verbSuffix) }
+        return  verbLength and hasVerbTense
     }
-    companion object{
+
+    companion object {
         private val verbSuffix = ".*[drl]".toRegex()
     }
 }

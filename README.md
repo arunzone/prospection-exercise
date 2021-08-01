@@ -146,3 +146,9 @@ Aenean aucbor purusa. | Rule 4 - no preposition at the sentence
 # Submission
 
 Create a branch out of the repo, submit pull-request and notify us about completion
+
+## Assumptions
+
+* Rule #4
+    * sentence is considered valid as long as it has a proper noun, verb and preposition to keep the
+      solution simple
