@@ -119,6 +119,46 @@ internal class ParagraphProcessorTest : ShouldSpec() {
                     )
                 }
             }
+            context("violation") {
+                val firstViolationsResult = ViolationsResult(
+                    charactersCount = 1,
+                    wordsCount = 2,
+                    sentencesCount = 3
+                )
+                val secondViolationsResult = ViolationsResult(
+                    charactersCount = 4,
+                    wordsCount = 5,
+                    sentencesCount = 6
+                )
+                val firstResult = GrammarResult(
+                    verbsCount = 0,
+                    nounsCount = 0,
+                    prepositionsCount = 0,
+                    violations = firstViolationsResult
+                )
+                val secondResult = GrammarResult(
+                    verbsCount = 0,
+                    nounsCount = 0,
+                    prepositionsCount = 0,
+                    violations = secondViolationsResult
+                )
+                every { sentenceProcessor process "Cufabiu maffas nonad in auguec finibu soliciu" } answers { firstResult }
+                every { sentenceProcessor process "Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac" } answers { secondResult }
+                should("return sum of violations") {
+                    val result =
+                        paragraphProcessor process "Cufabiu maffas nonad in auguec finibu soliciu. Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. "
+                    result shouldBe GrammarResult(
+                        verbsCount = 0,
+                        nounsCount = 0,
+                        prepositionsCount = 0,
+                        violations = ViolationsResult(
+                            charactersCount = 5,
+                            wordsCount = 7,
+                            sentencesCount = 9
+                        )
+                    )
+                }
+            }
         }
 
     }
