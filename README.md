@@ -152,3 +152,10 @@ Create a branch out of the repo, submit pull-request and notify us about complet
 * Rule #4
     * sentence is considered valid as long as it has a proper noun, verb and preposition to keep the solution simple
 * Used Integer data type for simple and better code readability
+* UI status will display INVALID if any violation count is greater than zero
+* Error handling and message display
+* Any additional empty lines considered as Rule #6 violation
+
+##  Production ready
+Monitoring
+API contract test
