@@ -25,7 +25,7 @@ class ParagraphProcessor(@Autowired private val sentenceProcessor: SentenceProce
             sentencesCount = sentenceViolation.sentencesCount,
             verbsCount = sentenceViolation.verbsCount,
             paragraphSentencesCount = paragraphSentencesViolationCount,
-            paragraphSuffixesCount = 0
+            paragraphSuffixesCount = sentenceViolation.paragraphSuffixesCount
         )
         return GrammarResult(
             nounsCount = sentenceResult.nounsCount,
@@ -47,6 +47,7 @@ class ParagraphProcessor(@Autowired private val sentenceProcessor: SentenceProce
             wordsCount = calculatedSentenceGrammarResult.violation.wordsCount + sentenceGrammarResult.violation.wordsCount,
             sentencesCount = calculatedSentenceGrammarResult.violation.sentencesCount + sentenceGrammarResult.violation.sentencesCount,
             verbsCount = calculatedSentenceGrammarResult.violation.verbsCount + sentenceGrammarResult.violation.verbsCount,
+            paragraphSuffixesCount = calculatedSentenceGrammarResult.violation.paragraphSuffixesCount + sentenceGrammarResult.violation.paragraphSuffixesCount,
         )
     )
 

@@ -26,9 +26,9 @@ internal class LanguageServiceTest : ShouldSpec() {
     }
 
     init {
-        context("single paragraph no linebreak") {
+        context("single line no paragraph") {
             val text = """
-                Cufabiu maffas nonad in auguec finibu soliciu. Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. Nullam quir poral ac merul!
+                Cufabiu maffas nonad in auguec finibu soliciu. Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. Nullam quir poral ac merul
             """.trimIndent()
 
             val result = languageService.analyseGrammar(text)
@@ -53,7 +53,6 @@ internal class LanguageServiceTest : ShouldSpec() {
         context("single paragraph") {
             val text = """
                 Cufabiu maffas nonad in auguec finibu soliciu. Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. Nullam quir poral ac merul!
-                
             """.trimIndent()
             val violationsResult = ViolationsResult(
                 charactersCount = 4,
@@ -89,7 +88,7 @@ internal class LanguageServiceTest : ShouldSpec() {
                 result.violation.wordsCount shouldBe 5
             }
             should("have verbs violation count") {
-                result.violation.wordsCount shouldBe 7
+                result.violation.verbsCount shouldBe 7
             }
             should("have sentence violation count") {
                 result.violation.sentencesCount shouldBe 6
@@ -159,19 +158,9 @@ internal class LanguageServiceTest : ShouldSpec() {
             val text = """
                 Cufabiu maffas nonad in auguec finibu soliciu. Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. Nullam quir poral ac merul!
             """.trimIndent()
-            val textOneLineBreak = """
-                Cufabiu maffas nonad in auguec finibu soliciu. Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. Nullam quir poral ac merul!
-                
-            """.trimIndent()
-            val textTwoLineBreak = """
-                Cufabiu maffas nonad in auguec finibu soliciu. Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. Nullam quir poral ac merul!
-                
-                
-            """.trimIndent()
             val invalidParagrapLineBreak = """
                 Cufabiu maffas nonad in auguec finibu soliciu.
                 Mauhis arcusu semihe ir digil quisam impediec es macir quisua nullac. Nullam quir poral ac merul!
-                
             """.trimIndent()
             val violationsResult = ViolationsResult(
                 charactersCount = 4,
@@ -191,9 +180,7 @@ internal class LanguageServiceTest : ShouldSpec() {
 
             table(
                 headers("input", "errorCount"),
-                row(text,  1),
-                row(textOneLineBreak,  0),
-                row(textTwoLineBreak, 1),
+                row(text,  0),
                 row(invalidParagrapLineBreak, 1),
             ).forAll { input, errorCount ->
                 languageService.analyseGrammar(input).violation.paragraphSuffixesCount shouldBe errorCount

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class LanguageService(@Autowired private val paragraphProcessor: ParagraphProcessor) {
     infix fun analyseGrammar(text: String): GrammarResult {
         val rawParagraphs = text.split(paragraphSeparator)
-        if(rawParagraphs.size < 2){
+        if(rawParagraphs.size < 2 && !text.endsWith("!")){
             return noParagraphResult()
         }
         val paragraphs = rawParagraphs.filter { it.isNotEmpty() }
@@ -62,7 +62,7 @@ class LanguageService(@Autowired private val paragraphProcessor: ParagraphProces
             verbsCount = paragraphViolation.verbsCount,
             sentencesCount = paragraphViolation.sentencesCount,
             paragraphSentencesCount = paragraphViolation.paragraphSentencesCount,
-            paragraphSuffixesCount = invalidParagraphSuffixesCount
+            paragraphSuffixesCount = paragraphViolation.paragraphSuffixesCount + invalidParagraphSuffixesCount
         )
     }
 
@@ -82,7 +82,7 @@ class LanguageService(@Autowired private val paragraphProcessor: ParagraphProces
             verbsCount = calculatedGrammarResult.violation.verbsCount + grammarResult.violation.verbsCount,
             sentencesCount = calculatedGrammarResult.violation.sentencesCount + grammarResult.violation.sentencesCount,
             paragraphSentencesCount = calculatedGrammarResult.violation.paragraphSentencesCount + grammarResult.violation.paragraphSentencesCount,
-            paragraphSuffixesCount = calculatedGrammarResult.violation.paragraphSuffixesCount,
+            paragraphSuffixesCount = calculatedGrammarResult.violation.paragraphSuffixesCount + grammarResult.violation.paragraphSuffixesCount,
         )
     )
 

@@ -111,6 +111,10 @@ internal class SentenceProcessorTest : ShouldSpec() {
                 val processResult = sentenceProcessor.process("Aucbor pur")
                 processResult.violation.sentencesCount shouldBe 1
             }
+            should("have violation for paragraph suffix") {
+                val processResult = sentenceProcessor.process("Aucbor! pur")
+                processResult.violation.paragraphSuffixesCount shouldBe 1
+            }
         }
     }
 }

@@ -5,4 +5,5 @@ data class SentenceViolationsResult(
     val wordsCount: Int,
     val sentencesCount: Int,
     val verbsCount: Int,
+    val paragraphSuffixesCount: Int,
 )
