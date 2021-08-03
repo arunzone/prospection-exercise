@@ -25,12 +25,6 @@ internal class SentenceProcessorTest : ShouldSpec() {
             processResult.verbsCount shouldBe 1
         }
 
-        should("return verb count 2 for a sentence with 2 verb") {
-            val processResult = sentenceProcessor.process("Cufabiu nonad in finl")
-
-            processResult.verbsCount shouldBe 2
-        }
-
         should("return invalid characters count 1 for a sentence with one invalid character") {
             val processResult = sentenceProcessor.process("Cufabiuz nonad")
             processResult.violation.charactersCount shouldBe 1

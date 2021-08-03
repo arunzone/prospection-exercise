@@ -10,9 +10,22 @@ import org.springframework.stereotype.Service
 class LanguageService(@Autowired private val paragraphProcessor: ParagraphProcessor) {
     infix fun analyseGrammar(text: String): GrammarResult {
         val rawParagraphs = text.split(paragraphSeparator)
-        if(rawParagraphs.size < 2 && !text.endsWith("!")){
+        if (notHavingEvenOneParagraph(rawParagraphs, text)) {
             return noParagraphResult()
         }
+
+        val (paragraphResult, violation) = process(rawParagraphs, text)
+        return GrammarResult(
+            verbsCount = paragraphResult.verbsCount,
+            nounsCount = paragraphResult.nounsCount,
+            prepositionsCount = paragraphResult.prepositionsCount,
+            violation = violation
+        )
+    }
+
+    private fun notHavingEvenOneParagraph(rawParagraphs: List<String>, text: String) = rawParagraphs.size < 2 && !text.endsWith("!")
+
+    private fun process(rawParagraphs: List<String>, text: String): Pair<GrammarResult, ViolationsResult> {
         val paragraphs = rawParagraphs.filter { it.isNotEmpty() }
         val paragraphResult = paragraphs.map { sanitizeParagraphSuffix(it) }
             .map { paragraphProcessor process it }
@@ -21,12 +34,7 @@ class LanguageService(@Autowired private val paragraphProcessor: ParagraphProces
             }
 
         val violation = violationsResultFrom(text, paragraphs, paragraphResult)
-        return GrammarResult(
-            verbsCount = paragraphResult.verbsCount,
-            nounsCount = paragraphResult.nounsCount,
-            prepositionsCount = paragraphResult.prepositionsCount,
-            violation = violation
-        )
+        return Pair(paragraphResult, violation)
     }
 
     private fun noParagraphResult(): GrammarResult {
@@ -46,11 +54,7 @@ class LanguageService(@Autowired private val paragraphProcessor: ParagraphProces
     }
 
 
-    private fun violationsResultFrom(
-        text: String,
-        paragraphs: List<String>,
-        paragraphResult: GrammarResult
-    ): ViolationsResult {
+    private fun violationsResultFrom(text: String, paragraphs: List<String>, paragraphResult: GrammarResult): ViolationsResult {
         val invalidParagraphs = text.split(invalidParagraphSeparator)
         val paragraphSuffixesDifference = invalidParagraphs.size - paragraphs.size
         val invalidParagraphSuffixesCount =
@@ -69,10 +73,7 @@ class LanguageService(@Autowired private val paragraphProcessor: ParagraphProces
     private fun sanitizeParagraphSuffix(it: String) =
         if (it.endsWith("!")) it.dropLast(1) else it
 
-    private fun aggregateResult(
-        calculatedGrammarResult: GrammarResult,
-        grammarResult: GrammarResult
-    ) = GrammarResult(
+    private fun aggregateResult(calculatedGrammarResult: GrammarResult, grammarResult: GrammarResult) = GrammarResult(
         verbsCount = calculatedGrammarResult.verbsCount + grammarResult.verbsCount,
         nounsCount = calculatedGrammarResult.nounsCount + grammarResult.nounsCount,
         prepositionsCount = calculatedGrammarResult.prepositionsCount + grammarResult.prepositionsCount,

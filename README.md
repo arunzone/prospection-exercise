@@ -147,6 +147,24 @@ Aenean aucbor purusa. | Rule 4 - no preposition at the sentence
 
 Create a branch out of the repo, submit pull-request and notify us about completion
 
+# Design thought process
+
+### Domain thinking
+Any language grammar has structure, so based on my reading through requirement, 
+Domain is composed of multiple paragraphs (List<String>).
+Paragraphs are composed of multiple sentences (List<String>).
+And sentences contains words (List<String>)
+Currently the consolidated domain model not needed yet, so I haven't explicitly created but the pieces of the structure are present as List<string>.
+
+![Design diagram](documentation/Design.jpg)
+
+### Strategy and development
+I believe in TDD, and it helps me to design the system better.
+I tried to start creating small building block and separation of concern is followed by assigning single responsibility to an object or function.
+The language process will identify paragraphs and delegate them to Paragraph processor and consolidate the results at the end
+The paragraph processor identify sentences and delegate sentence processing to SentenceProcessor and to VerbsProcessor and so on.
+I haven't implemented co-routine to allow parallel processing yet. Core idea is to apply MapReduce to improve performance.
+
 ## Assumptions
 
 * Rule #4
@@ -158,5 +176,7 @@ Create a branch out of the repo, submit pull-request and notify us about complet
 * Didn't extract into stateless ui components for better testability, because of time constraint
 
 ##  Production ready
-Monitoring
-API contract test
+* Monitoring
+* API contract test
+* No Auth or any preventions
+

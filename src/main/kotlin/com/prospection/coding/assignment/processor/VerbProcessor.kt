@@ -9,8 +9,8 @@ class VerbProcessor(
     @Autowired private val verbValidator: VerbValidator,
 ) {
 
-    infix fun process(sentenceWords: List<String>): Pair<Int, Int> {
-        val allVerbs = sentenceWords.filter { verbValidator.verbSized(it) }
+    infix fun process(words: List<String>): Pair<Int, Int> {
+        val allVerbs = words.filter { verbValidator.verbSized(it) }
         val validVerbsCount = allVerbs.count { verbValidator.isVerb(it) }
         val invalidVerbsCount = allVerbs.size - validVerbsCount
         return Pair(validVerbsCount, invalidVerbsCount)
