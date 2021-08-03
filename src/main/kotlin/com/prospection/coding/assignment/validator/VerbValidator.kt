@@ -5,19 +5,14 @@ import org.springframework.stereotype.Component
 @Component
 class VerbValidator {
     fun isVerb(word: String): Boolean {
-        val verbLength = word.length in 4..5
-        val hasVerbTense by lazy { word.matches(verbSuffix) }
-        return  verbLength and hasVerbTense
+        return word.matches(verbSuffix)
     }
 
-    fun isNotVerb(word: String): Boolean {
-        val verbLength = word.length in 4..5
-        val notVerbTense by lazy { word.matches(nonVerbSuffix) }
-        return  verbLength and notVerbTense
+    fun verbSized(word: String): Boolean {
+        return word.length in 4..5
     }
 
     companion object {
         private val verbSuffix = ".*[drl]".toRegex()
-        private val nonVerbSuffix = ".*[^drl]".toRegex()
     }
 }

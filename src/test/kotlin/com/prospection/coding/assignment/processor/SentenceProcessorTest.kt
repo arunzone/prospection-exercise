@@ -11,7 +11,7 @@ import io.kotest.matchers.shouldBe
 internal class SentenceProcessorTest : ShouldSpec() {
     override fun isolationMode() = IsolationMode.InstancePerTest
     private var sentenceProcessor = SentenceProcessor(
-        verbValidator = VerbValidator(),
+        verbProcessor = VerbProcessor(VerbValidator()),
         alphabetValidator = AlphabetValidator(),
         grammarValidator = GrammarValidator(),
         wordValidator = WordValidator()
