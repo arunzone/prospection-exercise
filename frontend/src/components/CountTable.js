@@ -11,8 +11,8 @@ const CountTable = ({ data, label }) => (
         </Table.Header>
 
         <Table.Body>
-            { data.map(entry =>
-                <Table.Row>
+            { data && data.map((entry, index) =>
+                <Table.Row key={index}>
                     <Table.Cell>{entry.name}</Table.Cell>
                     <Table.Cell>{entry.count}</Table.Cell>
                 </Table.Row>

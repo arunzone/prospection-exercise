@@ -155,6 +155,7 @@ Create a branch out of the repo, submit pull-request and notify us about complet
 * UI status will display INVALID if any violation count is greater than zero
 * Error handling and message display
 * Any additional empty lines considered as Rule #6 violation
+* Didn't extract into stateless ui components for better testability, because of time constraint
 
 ##  Production ready
 Monitoring

@@ -18,84 +18,66 @@ describe('Grammar result transformer', () => {
     const result = transformResult(response)
 
     test('should set verbs count', () => {
-        expect(result.types).toEqual(
-            expect.arrayContaining([
-                {
-                    name: 'Verbs', count: 4
-                }
-            ])
+        expect(result.types).toContainEqual(
+            {
+                name: 'Verbs', count: 4
+            }
         )
     });
     test('should set nouns count', () => {
-        expect(result.types).toEqual(
-            expect.arrayContaining([
-                {
-                    name: 'Nouns', count: 8
-                }
-            ])
+        expect(result.types).toContainEqual(
+            {
+                name: 'Nouns', count: 8
+            }
         )
     });
     test('should set prepositions count', () => {
-        expect(result.types).toEqual(
-            expect.arrayContaining([
-                {
-                    name: 'Prepositions', count: 5
-                }
-            ])
+        expect(result.types).toContainEqual(
+            {
+                name: 'Prepositions', count: 5
+            }
         )
     });
     test('should set Rule 1 count', () => {
-        expect(result.violations).toEqual(
-            expect.arrayContaining([
-                {
-                    name: 'Rule 1', count: 15
-                }
-            ])
+        expect(result.violations).toContainEqual(
+            {
+                name: 'Rule 1', count: 15
+            }
         )
     });
     test('should set Rule 2 count', () => {
-        expect(result.violations).toEqual(
-            expect.arrayContaining([
-                {
-                    name: 'Rule 2', count: 2
-                }
-            ])
+        expect(result.violations).toContainEqual(
+            {
+                name: 'Rule 2', count: 2
+            }
         )
     });
     test('should set Rule 3 count', () => {
-        expect(result.violations).toEqual(
-            expect.arrayContaining([
-                {
-                    name: 'Rule 3', count: 4
-                }
-            ])
+        expect(result.violations).toContainEqual(
+            {
+                name: 'Rule 3', count: 4
+            }
         )
     });
     test('should set Rule 4 count', () => {
-        expect(result.violations).toEqual(
-            expect.arrayContaining([
-                {
-                    name: 'Rule 4', count: 5
-                }
-            ])
+        expect(result.violations).toContainEqual(
+            {
+                name: 'Rule 4', count: 5
+            }
         )
     });
     test('should set Rule 5 count', () => {
-        expect(result.violations).toEqual(
-            expect.arrayContaining([
-                {
-                    name: 'Rule 5', count: 1
-                }
-            ])
+        expect(result.violations).toContainEqual(
+            {
+                name: 'Rule 5', count: 1
+            }
         )
     });
     test('should set Rule 6 count', () => {
-        expect(result.violations).toEqual(
-            expect.arrayContaining([
-                {
-                    name: 'Rule 6', count: 3
-                }
-            ])
+        expect(result.violations).toContainEqual(
+            {
+                name: 'Rule 6', count: 3
+            }
         )
     });
 
